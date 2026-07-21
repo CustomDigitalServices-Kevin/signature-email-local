@@ -31,18 +31,28 @@ export function ExportBar({
   return (
     <div className="export-bar">
       <div className="export-actions">
-        <button type="button" className="btn btn-primary" onClick={onCopyRich}>
+        <button
+          type="button"
+          className="btn btn-primary"
+          data-testid="copy-signature"
+          onClick={onCopyRich}
+        >
           {clipboardRichSupported ? t("exportCopy") : t("exportCopyPlain")}
         </button>
-        <button type="button" className="btn" onClick={onCopyHtml}>
+        <button type="button" className="btn" data-testid="copy-html" onClick={onCopyHtml}>
           {t("exportCopyHtml")}
         </button>
-        <button type="button" className="btn" onClick={onDownload}>
+        <button type="button" className="btn" data-testid="download-html" onClick={onDownload}>
           {t("exportDownload")}
         </button>
       </div>
 
-      <div className={`char-meter char-${severity}`} role="status" aria-live="polite">
+      <div
+        className={`char-meter char-${severity}`}
+        data-testid="char-meter"
+        role="status"
+        aria-live="polite"
+      >
         <span className="char-count">
           {charCount} {t("charsUnit")}
         </span>

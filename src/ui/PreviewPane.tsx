@@ -47,6 +47,7 @@ export function PreviewPane({ docLight, docDark }: PreviewPaneProps) {
       </div>
       <iframe
         className="preview-frame"
+        data-testid="preview-frame"
         title={t("previewFrameTitle")}
         sandbox="allow-same-origin"
         srcDoc={bg === "light" ? docLight : docDark}

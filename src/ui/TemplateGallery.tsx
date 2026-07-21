@@ -40,6 +40,7 @@ export function TemplateGallery({
             key={tpl.id}
             type="button"
             role="option"
+            data-testid="template-card"
             aria-selected={active}
             className={active ? "template-card is-active" : "template-card"}
             onClick={() => {

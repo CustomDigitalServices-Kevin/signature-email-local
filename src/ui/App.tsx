@@ -130,6 +130,7 @@ export function App() {
             <button
               type="button"
               className={locale === "fr" ? "lang-btn is-on" : "lang-btn"}
+              data-testid="lang-fr"
               aria-pressed={locale === "fr"}
               onClick={() => {
                 setLocale("fr");
@@ -140,6 +141,7 @@ export function App() {
             <button
               type="button"
               className={locale === "en" ? "lang-btn is-on" : "lang-btn"}
+              data-testid="lang-en"
               aria-pressed={locale === "en"}
               onClick={() => {
                 setLocale("en");
