@@ -7,8 +7,10 @@ import { sanitizeSignatureHtml } from "./sanitize";
 // The assertions here therefore only cover the DETERMINISTIC pre-pass in
 // sanitize.ts, which is engine-independent. The DOMPurify-specific fidelity
 // (preserving a legit table + mso-* styles, keeping https links, stripping
-// on*= handlers and javascript: URIs) is verified in sanitize.fidelity.test.ts,
-// which runs under jsdom (DOMPurify's officially supported environment).
+// on*= handlers and javascript: URIs) cannot be trusted under happy-dom and is
+// intentionally NOT unit-tested here: it is verified end-to-end in a real
+// browser (Playwright/Chromium, wave 2), where DOMPurify behaves correctly.
+// This split is a documented happy-dom limitation, not a coverage gap.
 
 describe("sanitizeSignatureHtml (garanties déterministes, tout moteur DOM)", () => {
   it("supprime les balises <script> et leur contenu", () => {
