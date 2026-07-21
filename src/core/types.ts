@@ -96,12 +96,7 @@ export interface SignatureData {
 
 // ---- Templates -------------------------------------------------------------
 export type TemplateCategory =
-  | "classic"
-  | "modern"
-  | "minimal"
-  | "creative"
-  | "corporate"
-  | "compact";
+  "classic" | "modern" | "minimal" | "creative" | "corporate" | "compact";
 
 // What a template actually renders, so the form can hide irrelevant inputs and
 // show hints ("this template has no photo slot").

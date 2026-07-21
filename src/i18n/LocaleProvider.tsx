@@ -12,10 +12,7 @@ type LocaleCtx = {
 const Ctx = createContext<LocaleCtx | null>(null);
 
 function detectLocale(): Locale {
-  if (
-    typeof navigator !== "undefined" &&
-    navigator.language.toLowerCase().startsWith("fr")
-  ) {
+  if (typeof navigator !== "undefined" && navigator.language.toLowerCase().startsWith("fr")) {
     return "fr";
   }
   return "en";
