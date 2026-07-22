@@ -5,6 +5,7 @@ import type { FontStack, SignatureData } from "../core/types";
 import { useLocale } from "../i18n/LocaleProvider";
 import { updateStyle } from "../state/signatureReducer";
 import { Collapsible, ColorField, RangeField, SelectField } from "./Field";
+import { StyleIcon } from "./icons";
 
 interface StylePanelProps {
   data: SignatureData;
@@ -17,7 +18,7 @@ export function StylePanel({ data, fontStacks, onChange }: StylePanelProps) {
   const fontOptions = fontStacks.map((f) => ({ value: f.stack, label: f.label }));
 
   return (
-    <Collapsible title={t("sectionStyle")}>
+    <Collapsible title={t("sectionStyle")} icon={<StyleIcon />} defaultOpen={false}>
       <div className="color-grid">
         <ColorField
           id="s-accent"
