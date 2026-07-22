@@ -2,7 +2,8 @@
 // bound to its control (htmlFor/id) for accessibility. This file exports only
 // components, so react-refresh/only-export-components stays happy.
 
-import type { ChangeEvent, ReactNode } from "react";
+import { useState } from "react";
+import type { ChangeEvent, ReactNode, SyntheticEvent } from "react";
 
 interface TextFieldProps {
   id: string;
@@ -156,14 +157,33 @@ interface CollapsibleProps {
   title: string;
   children: ReactNode;
   defaultOpen?: boolean;
+  // Optional section glyph shown before the title (a section icon component).
+  icon?: ReactNode;
 }
 
-// A pure CSS/HTML collapsible (native <details>). No script needed, so it is
-// safe under the strict CSP and works even before hydration.
-export function Collapsible({ title, children, defaultOpen = true }: CollapsibleProps) {
+// A native <details> collapsible. The open state is seeded from defaultOpen and
+// kept in React state, synced to the browser's own toggle via onToggle. Passing
+// a bare open={constant} would make React *control* the element and silently
+// veto the user's clicks (React resets it on the next render), so the section
+// would never expand. Tracking state + onToggle keeps it user-toggleable.
+export function Collapsible({ title, children, defaultOpen = true, icon }: CollapsibleProps) {
+  const [open, setOpen] = useState(defaultOpen);
   return (
-    <details className="collapsible" open={defaultOpen}>
-      <summary className="collapsible-summary">{title}</summary>
+    <details
+      className="collapsible"
+      open={open}
+      onToggle={(e: SyntheticEvent<HTMLDetailsElement>) => {
+        setOpen(e.currentTarget.open);
+      }}
+    >
+      <summary className="collapsible-summary">
+        {icon ? (
+          <span className="collapsible-icon" aria-hidden="true">
+            {icon}
+          </span>
+        ) : null}
+        <span className="collapsible-title">{title}</span>
+      </summary>
       <div className="collapsible-body">{children}</div>
     </details>
   );
