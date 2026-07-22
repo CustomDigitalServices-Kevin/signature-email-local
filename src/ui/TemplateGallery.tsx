@@ -1,10 +1,13 @@
-// Clickable grid of every template. Each card shows the localized name, a
-// category chip and an accent-colored dot; the detailed live rendering lives in
-// PreviewPane, so cards stay cheap (no per-card iframe).
+// Clickable grid of every template. Each card shows a live, scaled-down preview
+// of the template rendered with its own preset (so the palettes read as
+// genuinely different), plus the localized name and a category chip. The
+// detailed, editable rendering still lives in PreviewPane.
 
 import type { EmailSignatureTemplate, Locale, TemplateCategory } from "../core/types";
+import { getPreset } from "../templates/presets";
 import { useLocale } from "../i18n/LocaleProvider";
 import type { MessageKey } from "../i18n/messages";
+import { TemplateThumbnail } from "./TemplateThumbnail";
 
 const CATEGORY_KEY: Record<TemplateCategory, MessageKey> = {
   classic: "cat_classic",
@@ -18,18 +21,11 @@ const CATEGORY_KEY: Record<TemplateCategory, MessageKey> = {
 interface TemplateGalleryProps {
   templates: readonly EmailSignatureTemplate[];
   activeId: string;
-  accentColor: string;
   locale: Locale;
   onSelect: (id: string) => void;
 }
 
-export function TemplateGallery({
-  templates,
-  activeId,
-  accentColor,
-  locale,
-  onSelect,
-}: TemplateGalleryProps) {
+export function TemplateGallery({ templates, activeId, locale, onSelect }: TemplateGalleryProps) {
   const { t } = useLocale();
   return (
     <div className="template-grid" role="listbox" aria-label={t("templatesTitle")}>
@@ -47,7 +43,7 @@ export function TemplateGallery({
               onSelect(tpl.id);
             }}
           >
-            <span className="template-dot" style={{ background: accentColor }} aria-hidden="true" />
+            <TemplateThumbnail template={tpl} style={getPreset(tpl.id)} />
             <span className="template-card-body">
               <span className="template-name">{tpl.name[locale]}</span>
               <span className="template-cat">{t(CATEGORY_KEY[tpl.category])}</span>
