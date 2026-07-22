@@ -8,6 +8,7 @@ import type { ImageKind, ImageSource, SignatureData, TemplateCapabilities } from
 import { useLocale } from "../i18n/LocaleProvider";
 import { updateImage } from "../state/signatureReducer";
 import { Collapsible, RangeField, TextField } from "./Field";
+import { MediaIcon } from "./icons";
 
 const ONE_MB = 1_000_000;
 
@@ -139,7 +140,7 @@ interface MediaPanelProps {
 export function MediaPanel({ data, capabilities, onChange }: MediaPanelProps) {
   const { t } = useLocale();
   return (
-    <Collapsible title={t("sectionMedia")}>
+    <Collapsible title={t("sectionMedia")} icon={<MediaIcon />} defaultOpen={false}>
       <ImageSlot
         idPrefix="logo"
         label={t("mediaLogo")}
