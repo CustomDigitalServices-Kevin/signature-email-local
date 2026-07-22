@@ -8,6 +8,7 @@ import { useLocale } from "../i18n/LocaleProvider";
 import type { MessageKey } from "../i18n/messages";
 import { updateField, updateSocial } from "../state/signatureReducer";
 import { Collapsible, TextAreaField, TextField } from "./Field";
+import { ContactIcon, ExtrasIcon, IdentityIcon, SocialIcon } from "./icons";
 
 const SOCIAL_LABEL: Record<SocialNetwork, MessageKey> = {
   linkedin: "social_linkedin",
@@ -29,7 +30,7 @@ export function SignatureForm({ data, capabilities, onChange }: SignatureFormPro
 
   return (
     <div className="form-stack">
-      <Collapsible title={t("sectionIdentity")}>
+      <Collapsible title={t("sectionIdentity")} icon={<IdentityIcon />} defaultOpen>
         <TextField
           id="f-fullName"
           label={t("fieldFullName")}
@@ -64,7 +65,7 @@ export function SignatureForm({ data, capabilities, onChange }: SignatureFormPro
         />
       </Collapsible>
 
-      <Collapsible title={t("sectionContact")}>
+      <Collapsible title={t("sectionContact")} icon={<ContactIcon />} defaultOpen={false}>
         <TextField
           id="f-phone"
           label={t("fieldPhone")}
@@ -111,7 +112,7 @@ export function SignatureForm({ data, capabilities, onChange }: SignatureFormPro
         />
       </Collapsible>
 
-      <Collapsible title={t("sectionSocial")}>
+      <Collapsible title={t("sectionSocial")} icon={<SocialIcon />} defaultOpen={false}>
         {!capabilities.social ? <p className="note">{t("capNoSocial")}</p> : null}
         {SOCIAL_NETWORKS.map((network) => (
           <TextField
@@ -127,7 +128,7 @@ export function SignatureForm({ data, capabilities, onChange }: SignatureFormPro
         ))}
       </Collapsible>
 
-      <Collapsible title={t("sectionExtras")}>
+      <Collapsible title={t("sectionExtras")} icon={<ExtrasIcon />} defaultOpen={false}>
         {!capabilities.tagline ? <p className="note">{t("capNoTagline")}</p> : null}
         <TextField
           id="f-tagline"
