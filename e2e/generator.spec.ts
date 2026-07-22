@@ -44,6 +44,10 @@ test("changing the accent color updates the preview", async ({ page }) => {
   await page.locator("#f-fullName").fill("Accent Test");
   await expect(page.frameLocator(PREVIEW).locator("body")).toContainText("Accent Test");
 
+  // The Style section is collapsed by default; expand it before editing colours.
+  const styleSection = page.locator("details", { has: page.locator("#s-accent") });
+  await styleSection.locator("summary").click();
+  await expect(styleSection).toHaveAttribute("open", "");
   await page.locator("#s-accent").fill("#abcdef");
 
   // The default template paints an accent rule with bgcolor=<accentColor>.
