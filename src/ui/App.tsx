@@ -20,6 +20,7 @@ import {
   saveSignatureData,
 } from "../core/storage";
 import { DEFAULT_TEMPLATE_ID, getTemplate, TEMPLATES } from "../templates/index";
+import { getPreset } from "../templates/presets";
 import { useLocale } from "../i18n/LocaleProvider";
 import { updateField } from "../state/signatureReducer";
 import { ExportBar } from "./ExportBar";
@@ -83,8 +84,11 @@ export function App() {
     setToast(null);
   }, []);
 
+  // Selecting a template also applies its signature preset (palette + font),
+  // so each template reads as a genuinely different style. Manual tweaks in the
+  // Style panel afterwards still win; they are simply reset on the next switch.
   const onSelectTemplate = useCallback((id: string) => {
-    setData((prev) => updateField(prev, "templateId", id));
+    setData((prev) => ({ ...updateField(prev, "templateId", id), style: getPreset(id) }));
   }, []);
 
   const onReset = useCallback(() => {
@@ -164,7 +168,6 @@ export function App() {
             <TemplateGallery
               templates={TEMPLATES}
               activeId={data.templateId}
-              accentColor={data.style.accentColor}
               locale={locale}
               onSelect={onSelectTemplate}
             />
